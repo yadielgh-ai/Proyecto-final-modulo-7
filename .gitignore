@@ -1,0 +1,10 @@
+# ignora la carpeta del entorno virtual
+venv/
+env/
+
+# ignora archivos compilados de Python
+__pycache__/
+*.pyc
+
+# ignora archivos del sistema operativo
+.DS_Store
