@@ -14,9 +14,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# alke_wallet/urls.py
 from django.contrib import admin
-from django.urls import path
+# Se importa la función 'include' para enlazar URLs de otras aplicaciones
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Se incluyen las rutas de la aplicación 'gestion'
+    path('', include('gestion.urls')),
 ]
