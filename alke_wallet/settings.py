@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Se registra la nueva aplicación del proyecto
+    'gestion',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',      
         'NAME': 'alke_wallet_db', 
         'USER': 'root', 
-        'PASSWORD': 'Liorad202**', # Ojo, utilizar varables para esto.
+        'PASSWORD': 'Liorad2025**', # Ojo, utilizar varables para esto.
         
         # HOST 'localhost' indica que la base de datos corre en tu propia máquina.
         'HOST': 'localhost', 
