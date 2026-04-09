@@ -1,6 +1,8 @@
 # gestion/views.py
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
+# Se importan funciones de agregación para consultas avanzadas del ORM
+from django.db.models import Sum, Count
 from .models import Cliente, Cuenta, Transaccion
 
 # Se define la vista para listar todos los clientes (Read)
@@ -92,3 +94,26 @@ class TransaccionDeleteView(DeleteView):
     model = Transaccion
     template_name = 'gestion/transaccion_confirm_delete.html'
     success_url = reverse_lazy('transaccion_list')
+
+# Se define una vista basada en TemplateView para mostrar reportes combinados
+class DashboardView(TemplateView):
+    template_name = 'gestion/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        # Se obtiene el contexto base de la clase padre
+        context = super().get_context_data(**kwargs)
+        
+        # 1. ORM Avanzado (Anotaciones): 
+        # Se anexa a cada cliente el número total de sus cuentas y la suma de sus saldos
+        context['clientes_resumen'] = Cliente.objects.annotate(
+            num_cuentas=Count('cuenta'),
+            saldo_total=Sum('cuenta__saldo')
+        )
+
+        # 2. Consulta SQL Personalizada usando raw():
+        # Se ejecuta una consulta directa a la base de datos MySQL. 
+        # Django nombra las tablas automáticamente como "nombre_app_nombre_modelo"
+        consulta_sql = "SELECT id, nombre, email FROM gestion_cliente ORDER BY id DESC LIMIT 5"
+        context['ultimos_clientes_sql'] = Cliente.objects.raw(consulta_sql)
+
+        return context

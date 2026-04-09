@@ -1,0 +1,45 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+    <h2>Dashboard y Reportes</h2>
+    <p>Esta sección demuestra el uso de consultas avanzadas con ORM y sentencias SQL raw.</p>
+
+    <hr>
+
+    <h3>1. Reporte mediante ORM Avanzado (Anotaciones)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Total de Cuentas</th>
+                <th>Saldo Total Acumulado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes_resumen %}
+                <tr>
+                    <td>{{ cliente.nombre }}</td>
+                    <td>{{ cliente.num_cuentas }}</td>
+                    <td>${{ cliente.saldo_total|default:"0.00" }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">No hay datos disponibles.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br><hr><br>
+
+    <h3>2. Reporte mediante SQL Personalizado (raw)</h3>
+    <p>Últimos 5 clientes registrados (Consulta SQL directa a MySQL):</p>
+    <ul>
+        {% for cliente in ultimos_clientes_sql %}
+            <li><strong>ID:</strong> {{ cliente.id }} | <strong>Nombre:</strong> {{ cliente.nombre }} | <strong>Email:</strong> {{ cliente.email }}</li>
+        {% empty %}
+            <li>No se encontraron clientes.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

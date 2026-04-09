@@ -3,10 +3,15 @@ from django.urls import path
 from .views import (
     ClienteListView, ClienteCreateView, ClienteUpdateView, ClienteDeleteView,
     CuentaListView, CuentaCreateView, CuentaUpdateView, CuentaDeleteView,
-    TransaccionListView, TransaccionCreateView, TransaccionUpdateView, TransaccionDeleteView
+    TransaccionListView, TransaccionCreateView, TransaccionUpdateView, TransaccionDeleteView, 
+    DashboardView
 )
 
 urlpatterns = [
+
+    # --- Ruta para el Dashboard (Consultas Personalizadas) ---
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
+    
     # --- Rutas de Clientes ---
     path('clientes/', ClienteListView.as_view(), name='cliente_list'),
     path('clientes/nuevo/', ClienteCreateView.as_view(), name='cliente_create'),
