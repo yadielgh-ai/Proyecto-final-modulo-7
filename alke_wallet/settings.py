@@ -127,3 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+# Se define la URL a la que Django redirigirá a los usuarios que no hayan iniciado sesión
+LOGIN_URL = '/admin/login/'

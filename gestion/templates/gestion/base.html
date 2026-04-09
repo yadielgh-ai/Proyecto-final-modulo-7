@@ -25,8 +25,13 @@
             <a href="{% url 'cliente_list' %}">Clientes</a>
             <a href="{% url 'cuenta_list' %}">Cuentas</a>
             <a href="{% url 'transaccion_list' %}">Transacciones</a>
+            
+            <span style="float: right;">
+                {% if user.is_authenticated %}
+                    Hola, <strong>{{ user.username }}</strong> | <a href="/admin/">Ir al Panel Admin</a>
+                {% endif %}
+            </span>
         </nav>
-
         {% block content %}
         {% endblock %}
     </div>

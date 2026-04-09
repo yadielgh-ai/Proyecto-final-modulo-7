@@ -4,16 +4,19 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, T
 # Se importan funciones de agregación para consultas avanzadas del ORM
 from django.db.models import Sum, Count
 from .models import Cliente, Cuenta, Transaccion
+# Se importa el Mixin de seguridad desde la aplicación preinstalada 'auth'
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Cliente, Cuenta, Transaccion
 
 # Se define la vista para listar todos los clientes (Read)
-class ClienteListView(ListView):
+class ClienteListView(LoginRequiredMixin, ListView):
     model = Cliente
     # CORRECCIÓN: Se ajusta la ruta para que apunte a la carpeta 'gestion'
     template_name = 'gestion/cliente_list.html'
     context_object_name = 'clientes'
 
 # Se define la vista para crear un nuevo cliente (Create)
-class ClienteCreateView(CreateView):
+class ClienteCreateView(LoginRequiredMixin, CreateView):
     model = Cliente
     fields = ['nombre', 'email', 'telefono']
     # CORRECCIÓN: Se ajusta la ruta para que apunte a la carpeta 'gestion'
@@ -21,7 +24,7 @@ class ClienteCreateView(CreateView):
     success_url = reverse_lazy('cliente_list')
 
 # Se define la vista para actualizar un cliente existente (Update)
-class ClienteUpdateView(UpdateView):
+class ClienteUpdateView(LoginRequiredMixin, UpdateView):
     model = Cliente
     fields = ['nombre', 'email', 'telefono']
     # CORRECCIÓN: Se ajusta la ruta para que apunte a la carpeta 'gestion'
@@ -29,7 +32,7 @@ class ClienteUpdateView(UpdateView):
     success_url = reverse_lazy('cliente_list')
 
 # Se define la vista para eliminar un cliente (Delete)
-class ClienteDeleteView(DeleteView):
+class ClienteDeleteView(LoginRequiredMixin, DeleteView):
     model = Cliente
     # CORRECCIÓN: Se ajusta la ruta para que apunte a la carpeta 'gestion'
     template_name = 'gestion/cliente_confirm_delete.html'
@@ -39,13 +42,13 @@ class ClienteDeleteView(DeleteView):
 # --- CRUD PARA CUENTAS ---
 
 # Se define la vista para listar cuentas
-class CuentaListView(ListView):
+class CuentaListView(LoginRequiredMixin, ListView):
     model = Cuenta
     template_name = 'gestion/cuenta_list.html'
     context_object_name = 'cuentas'
 
 # Se define la vista para crear una cuenta
-class CuentaCreateView(CreateView):
+class CuentaCreateView(LoginRequiredMixin, CreateView):
     model = Cuenta
     # Se omiten campos automáticos; el usuario elige el cliente y el saldo inicial
     fields = ['cliente', 'saldo']
@@ -53,14 +56,14 @@ class CuentaCreateView(CreateView):
     success_url = reverse_lazy('cuenta_list')
 
 # Se define la vista para editar una cuenta
-class CuentaUpdateView(UpdateView):
+class CuentaUpdateView(LoginRequiredMixin, UpdateView):
     model = Cuenta
     fields = ['cliente', 'saldo']
     template_name = 'gestion/cuenta_form.html'
     success_url = reverse_lazy('cuenta_list')
 
 # Se define la vista para eliminar una cuenta
-class CuentaDeleteView(DeleteView):
+class CuentaDeleteView(LoginRequiredMixin, DeleteView):
     model = Cuenta
     template_name = 'gestion/cuenta_confirm_delete.html'
     success_url = reverse_lazy('cuenta_list')
@@ -69,13 +72,13 @@ class CuentaDeleteView(DeleteView):
 # --- CRUD PARA TRANSACCIONES ---
 
 # Se define la vista para listar transacciones
-class TransaccionListView(ListView):
+class TransaccionListView(LoginRequiredMixin, ListView):
     model = Transaccion
     template_name = 'gestion/transaccion_list.html'
     context_object_name = 'transacciones'
 
 # Se define la vista para registrar una transacción
-class TransaccionCreateView(CreateView):
+class TransaccionCreateView(LoginRequiredMixin, CreateView):
     model = Transaccion
     # La fecha se genera automáticamente, por lo que no se incluye en el formulario
     fields = ['cuenta', 'tipo', 'monto']
@@ -83,20 +86,20 @@ class TransaccionCreateView(CreateView):
     success_url = reverse_lazy('transaccion_list')
 
 # Se define la vista para editar una transacción
-class TransaccionUpdateView(UpdateView):
+class TransaccionUpdateView(LoginRequiredMixin, UpdateView):
     model = Transaccion
     fields = ['cuenta', 'tipo', 'monto']
     template_name = 'gestion/transaccion_form.html'
     success_url = reverse_lazy('transaccion_list')
 
 # Se define la vista para eliminar una transacción
-class TransaccionDeleteView(DeleteView):
+class TransaccionDeleteView(LoginRequiredMixin, DeleteView):
     model = Transaccion
     template_name = 'gestion/transaccion_confirm_delete.html'
     success_url = reverse_lazy('transaccion_list')
 
 # Se define una vista basada en TemplateView para mostrar reportes combinados
-class DashboardView(TemplateView):
+class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'gestion/dashboard.html'
 
     def get_context_data(self, **kwargs):
