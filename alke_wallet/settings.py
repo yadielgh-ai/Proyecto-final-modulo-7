@@ -11,9 +11,16 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os                           # <-- Para leer el sistema operativo
+from dotenv import load_dotenv      # <-- Para leer el archivo .env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv()
+
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -79,9 +86,9 @@ DATABASES = {
         # ENGINE define el motor de base de datos que Django utilizará.
         # Se utiliza el backend de mysql.
         'ENGINE': 'django.db.backends.mysql',      
-        'NAME': 'alke_wallet_db', 
-        'USER': 'root', 
-        'PASSWORD': 'Liorad2025**', # Ojo, utilizar varables para esto.
+        'NAME': os.getenv('DB_NAME', 'alke_wallet_db'), 
+        'USER': os.getenv('DB_USER', 'root'), 
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
         
         # HOST 'localhost' indica que la base de datos corre en tu propia máquina.
         'HOST': 'localhost', 

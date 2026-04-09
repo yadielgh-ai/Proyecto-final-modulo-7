@@ -8,3 +8,6 @@ __pycache__/
 
 # ignora archivos del sistema operativo
 .DS_Store
+
+# Variables de entorno (Credenciales secretas)
+.env
