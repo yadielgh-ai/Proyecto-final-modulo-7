@@ -9,6 +9,9 @@ from .views import (
 
 urlpatterns = [
 
+    # Ruta raíz que carga el Dashboard por defecto
+    path('', DashboardView.as_view(), name='home'),
+
     # --- Ruta para el Dashboard (Consultas Personalizadas) ---
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     

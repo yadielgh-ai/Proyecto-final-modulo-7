@@ -1,12 +1,13 @@
 from django.contrib import admin
-# Se importan los modelos creados previamente
 from .models import Cliente, Cuenta, Transaccion
 
-# Se registra el modelo Cliente en el panel de administración para su gestión
-admin.site.register(Cliente)
+# Personalización del modelo Cliente según la pauta
+class ClienteAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'email', 'telefono')
+    search_fields = ('nombre', 'email')
 
-# Se registra el modelo Cuenta en el panel de administración
+# Registramos el cliente con su personalización
+admin.site.register(Cliente, ClienteAdmin)
+# Registramos el resto normalmente
 admin.site.register(Cuenta)
-
-# Se registra el modelo Transaccion en el panel de administración
 admin.site.register(Transaccion)

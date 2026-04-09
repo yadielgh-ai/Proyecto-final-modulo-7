@@ -2,20 +2,22 @@
 
 Este proyecto es una aplicación web desarrollada con Django para la gestión de activos financieros de una empresa fintech ficticia llamada "Alke Financial". Permite gestionar clientes, cuentas bancarias y registrar transacciones financieras.
 
-## 🚀 Características Principales
+## 🚀 Características Principales y Arquitectura
 
 * **Arquitectura MVC (MTV):** Implementación estructurada utilizando Modelos, Vistas Genéricas y Plantillas de Django.
 * **Gestión de Base de Datos:** Integración con **MySQL** como motor principal.
 * **Operaciones CRUD completas:** Capacidad para crear, leer, actualizar y eliminar registros de `Clientes`, `Cuentas` y `Transacciones`.
 * **ORM Avanzado y SQL Raw:** Inclusión de un panel de *Dashboard* que consolida datos usando anotaciones del ORM (`Sum`, `Count`) y sentencias SQL puras mediante `raw()`.
-* **Seguridad:** Protección contra ataques CSRF en todos los formularios y restricción de rutas utilizando `LoginRequiredMixin` y el sistema de autenticación preinstalado de Django.
+* **Seguridad y Entorno:** Protección contra ataques CSRF, restricción de rutas con `LoginRequiredMixin` y ocultamiento de credenciales de base de datos mediante variables de entorno (`.env`).
+* **Archivos Estáticos:** Uso de `django.contrib.staticfiles` para la gestión de estilos CSS personalizados.
 
 ## 🛠️ Tecnologías Utilizadas
 
 * Python 3
 * Django 
-* MySQL (y `mysqlclient`)
-* HTML5 / CSS básico
+* MySQL (adaptador `mysqlclient`)
+* `python-dotenv` (Gestión de variables de entorno)
+* HTML5 / CSS
 * Git / GitHub
 
 ## ⚙️ Configuración y Ejecución Local
@@ -34,12 +36,14 @@ Sigue estos pasos para correr el proyecto en tu máquina local:
    source venv/bin/activate
 
 3. **Instalar dependencias:**
-   pip install django mysqlclient
+   pip install django mysqlclient python-dotenv
 
-4. **Configurar la Base de Datos:**
-   * Asegúrate de tener tu servidor MySQL corriendo.
-   * Crea una base de datos vacía llamada `alke_wallet_db`.
-   * Verifica tus credenciales (usuario y contraseña) en el archivo `alke_wallet/settings.py`.
+4. **Configurar la Base de Datos y Variables de Entorno:**
+   * Asegúrate de tener tu servidor MySQL corriendo y crea una base de datos vacía llamada `alke_wallet_db`.
+   * En la raíz del proyecto, crea un archivo oculto llamado `.env` y agrega tus credenciales locales:
+     DB_NAME=alke_wallet_db
+     DB_USER=root
+     DB_PASSWORD=tu_contraseña_aqui
 
 5. **Aplicar las migraciones:**
    python manage.py migrate
@@ -50,5 +54,8 @@ Sigue estos pasos para correr el proyecto en tu máquina local:
 7. **Ejecutar el servidor de desarrollo:**
    python manage.py runserver
 
-   Accede a http://127.0.0.1:8000/clientes/ en tu navegador y loguéate con el superusuario creado.
+   Accede a http://127.0.0.1:8000/ en tu navegador y loguéate con el superusuario creado.
 
+## 📝 Reflexión Final
+
+El uso del ORM de Django demostró ser una herramienta invaluable para abstraer la complejidad de las sentencias SQL, permitiendo un desarrollo ágil y un código limpio. El sistema de migraciones garantizó que cada evolución en nuestros modelos se reflejara de manera controlada en MySQL. Finalmente, la integración de consultas personalizadas demostró la flexibilidad del framework para adaptarse a lógicas de negocio complejas sin perder rendimiento.
