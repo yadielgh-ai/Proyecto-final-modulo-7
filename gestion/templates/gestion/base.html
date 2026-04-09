@@ -19,9 +19,11 @@
 <body>
 
     <div class="container">
+        
         <nav>
-            <a href="{% url 'cliente_list' %}">Inicio (Clientes)</a>
-            <a href="{% url 'cliente_create' %}">Nuevo Cliente</a>
+            <a href="{% url 'cliente_list' %}">Clientes</a>
+            <a href="{% url 'cuenta_list' %}">Cuentas</a>
+            <a href="{% url 'transaccion_list' %}">Transacciones</a>
         </nav>
 
         {% block content %}

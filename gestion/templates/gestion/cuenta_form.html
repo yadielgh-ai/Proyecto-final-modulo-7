@@ -1,0 +1,13 @@
+{% extends 'gestion/base.html' %}
+
+{% block content %}
+    <h2>{% if object %}Editar Cuenta{% else %}Nueva Cuenta{% endif %}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit" class="btn">Guardar</button>
+        <a href="{% url 'cuenta_list' %}" class="btn">Cancelar</a>
+    </form>
+{% endblock %}
